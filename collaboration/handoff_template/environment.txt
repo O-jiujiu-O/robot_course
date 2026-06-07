@@ -1,0 +1,12 @@
+负责人：
+机器角色：
+主机名：
+Ubuntu 版本：
+GPU：
+显卡驱动：
+ROS 版本：
+Gazebo 版本：
+Python 路径：
+Conda 环境：
+代码版本：
+

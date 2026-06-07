@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="gui" default="true"/>
+  <arg name="show_vision_window" default="false"/>
+  <arg name="auto_start" default="false"/>
+
+  <include file="$(find embodied_robot_demo)/launch/gazebo_demo.launch">
+    <arg name="gui" value="$(arg gui)"/>
+  </include>
+
+  <node pkg="embodied_robot_demo" type="vision_node.py" name="vision_node" output="screen">
+    <param name="show_window" value="$(arg show_vision_window)"/>
+    <param name="minimum_area" value="800.0"/>
+  </node>
+
+  <node pkg="embodied_robot_demo" type="task_orchestrator.py" name="task_orchestrator" output="screen">
+    <param name="auto_start" value="$(arg auto_start)"/>
+    <param name="vision_timeout" value="10.0"/>
+  </node>
+</launch>
+

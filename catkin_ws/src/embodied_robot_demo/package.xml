@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>embodied_robot_demo</name>
+  <version>1.0.0</version>
+  <description>Course demo of a mobile manipulator with Gazebo, vision, voice, and task orchestration.</description>
+
+  <maintainer email="student@example.com">Student</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>controller_manager</depend>
+  <depend>cv_bridge</depend>
+  <depend>effort_controllers</depend>
+  <depend>gazebo_plugins</depend>
+  <depend>gazebo_ros</depend>
+  <depend>gazebo_ros_control</depend>
+  <depend>geometry_msgs</depend>
+  <depend>image_transport</depend>
+  <depend>joint_state_controller</depend>
+  <depend>robot_state_publisher</depend>
+  <depend>rospy</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>xacro</depend>
+  <exec_depend>joint_state_publisher_gui</exec_depend>
+  <exec_depend>rviz</exec_depend>
+
+  <export>
+    <gazebo_ros gazebo_model_path="${prefix}"/>
+  </export>
+</package>

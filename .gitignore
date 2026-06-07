@@ -1,0 +1,30 @@
+# Per-machine build outputs
+catkin_ws/build/
+catkin_ws/devel/
+catkin_ws/install/
+catkin_ws/log/
+
+# Per-machine third-party runtimes and environments
+isaacgym/*
+!isaacgym/.gitkeep
+envs/*
+!envs/.gitkeep
+
+# Generated evidence; keep only directory guidance in Git
+evidence/**/*.txt
+evidence/**/*.log
+evidence/**/*.png
+evidence/**/*.jpg
+evidence/**/*.wav
+evidence/**/*.mp4
+
+# Large handoff media
+collaboration/handoffs/**/videos/*
+collaboration/handoffs/**/screenshots/*
+
+# Python/editor caches
+__pycache__/
+*.py[cod]
+.vscode/
+.idea/
+
