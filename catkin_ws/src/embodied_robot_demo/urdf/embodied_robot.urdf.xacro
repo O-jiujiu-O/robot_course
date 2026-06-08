@@ -4,6 +4,7 @@
   <xacro:property name="wheel_radius" value="0.09"/>
   <xacro:property name="wheel_width" value="0.045"/>
   <xacro:property name="wheel_y" value="0.22"/>
+  <xacro:property name="wheel_x" value="0.18"/>
 
   <xacro:macro name="box_inertial" params="mass x y z">
     <inertial>
@@ -55,7 +56,7 @@
     <xacro:box_inertial mass="12.0" x="0.52" y="0.42" z="0.18"/>
   </link>
 
-  <xacro:macro name="wheel" params="prefix y">
+  <xacro:macro name="wheel" params="prefix x y">
     <link name="${prefix}_wheel_link">
       <visual>
         <origin rpy="${pi/2} 0 0"/>
@@ -71,7 +72,7 @@
     <joint name="${prefix}_wheel_joint" type="continuous">
       <parent link="base_link"/>
       <child link="${prefix}_wheel_link"/>
-      <origin xyz="0 ${y} -0.105"/>
+      <origin xyz="${x} ${y} -0.105"/>
       <axis xyz="0 1 0"/>
       <dynamics damping="0.05" friction="0.0"/>
     </joint>
@@ -80,22 +81,11 @@
     </gazebo>
   </xacro:macro>
 
-  <xacro:wheel prefix="left" y="${wheel_y}"/>
-  <xacro:wheel prefix="right" y="${-wheel_y}"/>
-
-  <link name="caster_link">
-    <visual><geometry><sphere radius="0.045"/></geometry><material name="dark"/></visual>
-    <collision><geometry><sphere radius="0.045"/></geometry></collision>
-    <inertial>
-      <mass value="0.15"/>
-      <inertia ixx="0.00012" ixy="0" ixz="0" iyy="0.00012" iyz="0" izz="0.00012"/>
-    </inertial>
-  </link>
-  <joint name="caster_joint" type="fixed">
-    <parent link="base_link"/><child link="caster_link"/>
-    <origin xyz="-0.19 0 -0.135"/>
-  </joint>
-  <gazebo reference="caster_link"><mu1>0.01</mu1><mu2>0.01</mu2></gazebo>
+  <!-- Keep the original joint names for the front wheels so existing checks remain valid. -->
+  <xacro:wheel prefix="left" x="${wheel_x}" y="${wheel_y}"/>
+  <xacro:wheel prefix="right" x="${wheel_x}" y="${-wheel_y}"/>
+  <xacro:wheel prefix="left_rear" x="${-wheel_x}" y="${wheel_y}"/>
+  <xacro:wheel prefix="right_rear" x="${-wheel_x}" y="${-wheel_y}"/>
 
   <link name="arm_base_link">
     <visual><geometry><cylinder radius="0.10" length="0.08"/></geometry><material name="silver"/></visual>
@@ -211,23 +201,21 @@
   </gazebo>
 
   <gazebo>
-    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+    <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
       <robotNamespace>/</robotNamespace>
-      <leftJoint>left_wheel_joint</leftJoint>
-      <rightJoint>right_wheel_joint</rightJoint>
+      <leftFrontJoint>left_wheel_joint</leftFrontJoint>
+      <rightFrontJoint>right_wheel_joint</rightFrontJoint>
+      <leftRearJoint>left_rear_wheel_joint</leftRearJoint>
+      <rightRearJoint>right_rear_wheel_joint</rightRearJoint>
       <wheelSeparation>${2 * wheel_y}</wheelSeparation>
       <wheelDiameter>${2 * wheel_radius}</wheelDiameter>
-      <wheelAcceleration>1.0</wheelAcceleration>
-      <wheelTorque>15</wheelTorque>
+      <torque>15</torque>
       <commandTopic>cmd_vel</commandTopic>
       <odometryTopic>odom</odometryTopic>
       <odometryFrame>odom</odometryFrame>
       <robotBaseFrame>base_footprint</robotBaseFrame>
-      <publishWheelTF>false</publishWheelTF>
-      <publishOdomTF>true</publishOdomTF>
-      <publishWheelJointState>true</publishWheelJointState>
+      <broadcastTF>true</broadcastTF>
       <updateRate>50</updateRate>
-      <legacyMode>false</legacyMode>
     </plugin>
   </gazebo>
 
