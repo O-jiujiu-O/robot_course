@@ -9,6 +9,7 @@ robot/
 ├── docs/                               # 手册、三人章节素材、最终文档与 PPT
 ├── collaboration/                      # 跨机器交付模板和交付包
 ├── evidence/                           # 按负责人保存实验依据
+├── catkin_ws/src/embodied_robot_demo从零构建教程.md
 ├── isaacgym/                           # 各机器本地安装，不参与代码同步
 └── envs/                               # 各机器本地环境，不参与代码同步
 ```
@@ -16,9 +17,9 @@ robot/
 规则：
 
 - `catkin_ws/src/embodied_robot_demo/` 必须保持为一个 ROS 包。
+- `catkin_ws/src/embodied_robot_demo从零构建教程.md` 说明如何从空 `src/` 逐步建立完整 ROS 包。
 - `isaacgym_demo/assets/embodied_robot.urdf` 与 Gazebo Xacro 描述同一机器人，但由 C 维护 Isaac Gym 版本。
 - `docs/team_inputs/person_X/` 保存每个人提交给 C 的文档章节和图表。
 - `collaboration/handoffs/person_X/` 保存每次跨机器交付包。
 - `evidence/person_X/` 保存各自机器产生的日志、截图和视频。
 - 不传递 `catkin_ws/build/`、`catkin_ws/devel/`、`isaacgym/` 或 `envs/`。
-
